@@ -61,6 +61,19 @@ void initializeGlViewport(GLFWwindow* window)
 
 void mainLoop(GLFWwindow* window)
 {
+	Triangle* triangle;
+
+	try
+	{
+		triangle = new Triangle();
+	}
+	catch (const char* message)
+	{
+		std::cout << message << std::endl;
+		system("pause");
+		return;
+	}
+	
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
@@ -68,9 +81,13 @@ void mainLoop(GLFWwindow* window)
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		triangle->drawTriangle();
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
+	delete triangle;
 }
 
 void cleanAndDeleteResources()
