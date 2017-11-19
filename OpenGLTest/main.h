@@ -13,7 +13,7 @@ void initializeGlViewport(GLFWwindow* window);
 
 void mainLoop(GLFWwindow* window);
 
-void cleanAndDeleteResources();
+void clearResources();
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 

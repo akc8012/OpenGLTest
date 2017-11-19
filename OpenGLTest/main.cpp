@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 	catch (const char* message)
 	{
 		std::cout << message << std::endl;
-		cleanAndDeleteResources();
+		clearResources();
 
 		system("pause");
 		return -1;
@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
 
 	mainLoop(window);
 
-	cleanAndDeleteResources();
+	clearResources();
 	return 0;
 }
 
@@ -74,7 +74,7 @@ void mainLoop(GLFWwindow* window)
 		return;
 	}
 	
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
@@ -91,7 +91,7 @@ void mainLoop(GLFWwindow* window)
 	delete triangle;
 }
 
-void cleanAndDeleteResources()
+void clearResources()
 {
 	glfwTerminate();
 }
