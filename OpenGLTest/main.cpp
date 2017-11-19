@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 
 	initializeGlViewport(window);
 
-	renderLoop(window);
+	mainLoop(window);
 
 	cleanAndDeleteResources();
 	return 0;
@@ -59,10 +59,15 @@ void initializeGlViewport(GLFWwindow* window)
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 }
 
-void renderLoop(GLFWwindow* window)
+void mainLoop(GLFWwindow* window)
 {
 	while (!glfwWindowShouldClose(window))
 	{
+		processInput(window);
+
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
@@ -74,6 +79,12 @@ void cleanAndDeleteResources()
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
+{	
 	glViewport(0, 0, width, height);
+}
+
+void processInput(GLFWwindow *window)
+{
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
 }
