@@ -61,11 +61,11 @@ void initializeGlViewport(GLFWwindow* window)
 
 void mainLoop(GLFWwindow* window)
 {
-	Triangle* triangle;
+	Renderer* renderer;
 
 	try
 	{
-		triangle = new Triangle();
+		renderer = new Renderer();
 	}
 	catch (const char* message)
 	{
@@ -82,13 +82,13 @@ void mainLoop(GLFWwindow* window)
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		triangle->drawTriangle();
+		renderer->drawTriangle();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 
-	delete triangle;
+	delete renderer;
 }
 
 void clearResources()

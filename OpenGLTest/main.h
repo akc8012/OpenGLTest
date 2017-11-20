@@ -1,7 +1,7 @@
 #pragma once
 
 #include "common.h"
-#include "Triangle.h"
+#include "Renderer.h"
 
 void instantiateGlfwWindow();
 

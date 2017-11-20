@@ -2,16 +2,16 @@
 
 #include "common.h"
 
-class Triangle
+class Shader
 {
 public:
 
-	Triangle();
-	~Triangle();
-	
-	void drawTriangle();
+	Shader();
+	unsigned int getShaderProgram() { return shaderProgram; }
 
 private:
+
+	unsigned int shaderProgram;
 
 	const char *vertexShaderSource = "#version 330 core\n"
 		"layout (location = 0) in vec3 aPos;\n"
@@ -27,17 +27,6 @@ private:
 		"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
 		"}\n\0";
 
-	unsigned int shaderProgram;
-	unsigned int vertexArrayObject;
-
-	void setupShaders();
-	void setupVertices();
-
 	unsigned int tryCreateShader(const char* source, GLenum shaderType);
 	unsigned int tryCreateShaderProgram(unsigned int vertexShader, unsigned int fragmentShader);
-
-	unsigned int bindVertexArrayObject();
-	unsigned int copyVerticesArrayToVertexBuffer();
-	unsigned int copyIndexArrayToElementBuffer();
-	void specifyVertexInterpretation();
 };
