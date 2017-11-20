@@ -6,14 +6,14 @@ Renderer::Renderer()
 
 	vertexArrayObject = bindVertexArrayObject();
 	unsigned int vertexBufferObject = copyVerticesArrayToVertexBuffer();
-	unsigned int elementBufferObject = copyIndexArrayToElementBuffer();
+	//unsigned int elementBufferObject = copyIndexArrayToElementBuffer();
 	specifyVertexInterpretation();
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
 	glDeleteBuffers(1, &vertexBufferObject);
-	glDeleteBuffers(1, &elementBufferObject);
+	//glDeleteBuffers(1, &elementBufferObject);
 }
 
 Renderer::~Renderer()
@@ -26,7 +26,8 @@ void Renderer::draw()
 {
 	glUseProgram(shader->getShaderProgram());
 	glBindVertexArray(vertexArrayObject);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glDrawArrays(GL_TRIANGLES, 3, 3);
 }
 
 unsigned int Renderer::bindVertexArrayObject()
@@ -42,10 +43,13 @@ unsigned int Renderer::copyVerticesArrayToVertexBuffer()
 {
 	unsigned int VBO;
 	float vertices[] = {
-		0.5f,  0.5f, 0.0f,  // top right
-		0.5f, -0.5f, 0.0f,  // bottom right
-		-0.5f, -0.5f, 0.0f,  // bottom left
-		-0.5f,  0.5f, 0.0f   // top left 
+		-0.8f, -0.5f, 0.0f,
+		0.2f, -0.5f, 0.0f,
+		-0.3f,  0.5f, 0.0f,
+
+		1.0f, -0.5f, 0.0f,
+		0.3f, -0.5f, 0.0f,
+		0.65f,  0.5f, 0.0f
 	};
 	
 	glGenBuffers(1, &VBO);
