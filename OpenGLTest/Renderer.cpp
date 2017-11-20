@@ -1,19 +1,17 @@
 #include "Renderer.h"
 
-Renderer::Renderer()
+Renderer::Renderer(const float offset[3])
 {
 	shader = new Shader();
 
 	vertexArrayObject = bindVertexArrayObject();
-	unsigned int vertexBufferObject = copyVerticesArrayToVertexBuffer();
-	unsigned int elementBufferObject = copyIndexArrayToElementBuffer();
+	unsigned int vertexBufferObject = copyVerticesArrayToVertexBuffer(offset);
 	specifyVertexInterpretation();
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
 	glDeleteBuffers(1, &vertexBufferObject);
-	glDeleteBuffers(1, &elementBufferObject);
 }
 
 Renderer::~Renderer()
@@ -26,7 +24,7 @@ void Renderer::draw()
 {
 	glUseProgram(shader->getShaderProgram());
 	glBindVertexArray(vertexArrayObject);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 unsigned int Renderer::bindVertexArrayObject()
@@ -38,15 +36,26 @@ unsigned int Renderer::bindVertexArrayObject()
 	return VAO;
 }
 
-unsigned int Renderer::copyVerticesArrayToVertexBuffer()
+unsigned int Renderer::copyVerticesArrayToVertexBuffer(const float offset[3])
 {
 	unsigned int VBO;
 	float vertices[] = {
-		0.5f,  0.5f, 0.0f,  // top right
-		0.5f, -0.5f, 0.0f,  // bottom right
-		-0.5f, -0.5f, 0.0f,  // bottom left
-		-0.5f,  0.5f, 0.0f   // top left 
+		-0.5f, -0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		0.0f,  0.5f, 0.0f
 	};
+
+	for (int i = 0; i < 9; i++)
+	{
+		int divByThree = i % 3;
+		
+		if (divByThree == 0)
+			vertices[i] += offset[0];
+		else if (divByThree-1 == 0)
+			vertices[i] += offset[1];
+		else
+			vertices[i] += offset[2];
+	}
 	
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);

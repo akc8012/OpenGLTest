@@ -7,7 +7,7 @@ class Renderer
 {
 public:
 
-	Renderer();
+	Renderer(const float offset[3]);
 	~Renderer();
 	
 	void draw();
@@ -18,7 +18,7 @@ private:
 	unsigned int vertexArrayObject;
 
 	unsigned int bindVertexArrayObject();
-	unsigned int copyVerticesArrayToVertexBuffer();
+	unsigned int copyVerticesArrayToVertexBuffer(const float offset[3]);
 	unsigned int copyIndexArrayToElementBuffer();
 	void specifyVertexInterpretation();
 };

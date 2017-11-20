@@ -61,11 +61,16 @@ void initializeGlViewport(GLFWwindow* window)
 
 void mainLoop(GLFWwindow* window)
 {
-	Renderer* renderer;
+	Renderer* rendererA;
+	Renderer* rendererB;
 
 	try
 	{
-		renderer = new Renderer();
+		float offsetA[] = { -0.6f, -0.0f, 0.0f };
+		float offsetB[] = { 0.6f, 0.2f, 0.0f };
+		
+		rendererA = new Renderer(offsetA);
+		rendererB = new Renderer(offsetB);
 	}
 	catch (const char* message)
 	{
@@ -82,13 +87,15 @@ void mainLoop(GLFWwindow* window)
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		renderer->draw();
+		rendererA->draw();
+		rendererB->draw();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 
-	delete renderer;
+	delete rendererA;
+	delete rendererB;
 }
 
 void clearResources()
