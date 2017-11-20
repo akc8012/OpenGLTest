@@ -1,8 +1,11 @@
 #include "Renderer.h"
 
-Renderer::Renderer(const float offset[3])
+Renderer::Renderer(Shader* _shader, const float offset[3])
 {
-	shader = new Shader();
+	if (_shader == NULL)
+		shader = new Shader();
+	else
+		shader = _shader;
 
 	vertexArrayObject = bindVertexArrayObject();
 	unsigned int vertexBufferObject = copyVerticesArrayToVertexBuffer(offset);

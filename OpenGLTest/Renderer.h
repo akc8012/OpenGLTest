@@ -7,7 +7,7 @@ class Renderer
 {
 public:
 
-	Renderer(const float offset[3]);
+	Renderer(Shader* _shader, const float offset[3]);
 	~Renderer();
 	
 	void draw();

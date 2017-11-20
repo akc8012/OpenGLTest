@@ -1,6 +1,12 @@
 #include "Shader.h"
 
-Shader::Shader()
+Shader::Shader(bool setupNow)
+{
+	if (setupNow)
+		setup();
+}
+
+void Shader::setup()
 {
 	unsigned int vertexShader = tryCreateShader(vertexShaderSource, GL_VERTEX_SHADER);
 	unsigned int fragmentShader = tryCreateShader(fragmentShaderSource, GL_FRAGMENT_SHADER);

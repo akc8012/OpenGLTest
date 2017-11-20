@@ -68,9 +68,21 @@ void mainLoop(GLFWwindow* window)
 	{
 		float offsetA[] = { -0.6f, -0.0f, 0.0f };
 		float offsetB[] = { 0.6f, 0.2f, 0.0f };
+
+		Shader* rendererBShader = new Shader(false);
+
+		char *yellowFragmentSource = "#version 330 core\n"
+			"out vec4 FragColor;\n"
+			"void main()\n"
+			"{\n"
+			"   FragColor = vec4(1.0f, 1.0f, 0.4f, 1.0f);\n"
+			"}\n\0";
+
+		rendererBShader->setFragmentShaderSource(yellowFragmentSource);
+		rendererBShader->setup();
 		
-		rendererA = new Renderer(offsetA);
-		rendererB = new Renderer(offsetB);
+		rendererA = new Renderer(NULL, offsetA);
+		rendererB = new Renderer(rendererBShader, offsetB);
 	}
 	catch (const char* message)
 	{

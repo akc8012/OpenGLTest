@@ -6,8 +6,11 @@ class Shader
 {
 public:
 
-	Shader();
+	Shader(bool setupNow = true);
+	void setup();
+	
 	unsigned int getShaderProgram() { return shaderProgram; }
+	void setFragmentShaderSource(char *_fragmentShaderSource) { fragmentShaderSource = _fragmentShaderSource; }
 
 private:
 
@@ -20,7 +23,7 @@ private:
 		"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
 		"}\0";
 
-	const char *fragmentShaderSource = "#version 330 core\n"
+	char *fragmentShaderSource = "#version 330 core\n"
 		"out vec4 FragColor;\n"
 		"void main()\n"
 		"{\n"
