@@ -22,7 +22,7 @@ Renderer::~Renderer()
 	delete shader;
 }
 
-void Renderer::drawTriangle()
+void Renderer::draw()
 {
 	glUseProgram(shader->getShaderProgram());
 	glBindVertexArray(vertexArrayObject);

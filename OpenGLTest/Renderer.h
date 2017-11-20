@@ -10,7 +10,7 @@ public:
 	Renderer();
 	~Renderer();
 	
-	void drawTriangle();
+	void draw();
 
 private:
 
