@@ -31,10 +31,10 @@ void Triangle::setupShaders()
 
 void Triangle::setupVertices()
 {
-	unsigned int vertexBufferObject = createVertexBufferObject();
-	vertexArrayObject = createVertexArrayObject();
-
-	unsigned int elementBufferObject = createElementBufferObject();
+	vertexArrayObject = bindVertexArrayObject();
+	unsigned int vertexBufferObject = copyVerticesArrayToVertexBuffer();
+	unsigned int elementBufferObject = copyIndexArrayToElementBuffer();
+	specifyVertexInterpretation();
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
@@ -83,7 +83,16 @@ unsigned int Triangle::tryCreateShaderProgram(unsigned int vertexShader, unsigne
 	return shaderProgram;
 }
 
-unsigned int Triangle::createVertexBufferObject()
+unsigned int Triangle::bindVertexArrayObject()
+{
+	unsigned int VAO;
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
+	return VAO;
+}
+
+unsigned int Triangle::copyVerticesArrayToVertexBuffer()
 {
 	unsigned int VBO;
 	float vertices[] = {
@@ -100,23 +109,7 @@ unsigned int Triangle::createVertexBufferObject()
 	return VBO;
 }
 
-unsigned int Triangle::createVertexArrayObject()
-{
-	unsigned int VAO;
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-	specifyVertexInterpretation();
-
-	return VAO;
-}
-
-void Triangle::specifyVertexInterpretation()
-{
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-}
-
-unsigned int Triangle::createElementBufferObject()
+unsigned int Triangle::copyIndexArrayToElementBuffer()
 {
 	unsigned int EBO;
 	unsigned int indices[6] = {
@@ -129,4 +122,10 @@ unsigned int Triangle::createElementBufferObject()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	return EBO;
+}
+
+void Triangle::specifyVertexInterpretation()
+{
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 }

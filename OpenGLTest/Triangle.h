@@ -36,9 +36,8 @@ private:
 	unsigned int tryCreateShader(const char* source, GLenum shaderType);
 	unsigned int tryCreateShaderProgram(unsigned int vertexShader, unsigned int fragmentShader);
 
-	unsigned int createVertexBufferObject();
-	unsigned int createVertexArrayObject();
+	unsigned int bindVertexArrayObject();
+	unsigned int copyVerticesArrayToVertexBuffer();
+	unsigned int copyIndexArrayToElementBuffer();
 	void specifyVertexInterpretation();
-
-	unsigned int createElementBufferObject();
 };
