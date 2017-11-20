@@ -26,8 +26,7 @@ void Renderer::draw()
 {
 	glUseProgram(shader->getShaderProgram());
 	glBindVertexArray(vertexArrayObject);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDrawArrays(GL_TRIANGLES, 3, 3);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
 unsigned int Renderer::bindVertexArrayObject()
