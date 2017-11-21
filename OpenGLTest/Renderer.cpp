@@ -55,11 +55,11 @@ unsigned int Renderer::copyVerticesArrayToVertexBuffer()
 {
 	unsigned int VBO;
 	float vertices[] = {
-		0.5f,  0.5f, 0.0f,  // top right
-		0.5f, -0.5f, 0.0f,  // bottom right
-		-0.5f, -0.5f, 0.0f,  // bottom left
-		-0.5f,  0.5f, 0.0f   // top left 
-	};
+         // positions        // colors
+         0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
+        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
+         0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
+    };
 	
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -85,6 +85,11 @@ unsigned int Renderer::copyIndexArrayToElementBuffer()
 
 void Renderer::specifyVertexInterpretation()
 {
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+	
+	// color attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 }
