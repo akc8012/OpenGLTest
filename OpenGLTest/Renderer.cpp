@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include <math.h>
 
 Renderer::Renderer()
 {
@@ -22,11 +23,23 @@ Renderer::~Renderer()
 	delete shader;
 }
 
-void Renderer::draw()
+void Renderer::drawRectangle()
 {
 	glUseProgram(shader->getShaderProgram());
 	glBindVertexArray(vertexArrayObject);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+}
+
+void Renderer::drawTriangle()
+{
+	glUseProgram(shader->getShaderProgram());
+
+	double greenValue = (sin(glfwGetTime()) / 2.0) + 0.5;
+	int vertexColorLocation = glGetUniformLocation(shader->getShaderProgram(), "ourColor");
+	glUniform4f(vertexColorLocation, 0.0f, (float)greenValue, 0.0f, 1.0f);
+	
+	glBindVertexArray(vertexArrayObject);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 unsigned int Renderer::bindVertexArrayObject()
