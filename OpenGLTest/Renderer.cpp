@@ -3,7 +3,7 @@
 
 Renderer::Renderer()
 {
-	shader = new Shader();
+	shader = new Shader("vertex.shader", "fragment.shader");
 
 	vertexArrayObject = bindVertexArrayObject();
 	unsigned int vertexBufferObject = copyVerticesArrayToVertexBuffer();
@@ -25,14 +25,14 @@ Renderer::~Renderer()
 
 void Renderer::drawRectangle()
 {
-	glUseProgram(shader->getShaderProgram());
+	shader->use();
 	glBindVertexArray(vertexArrayObject);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
 void Renderer::drawTriangle()
 {
-	glUseProgram(shader->getShaderProgram());
+	shader->use();
 
 	double greenValue = (sin(glfwGetTime()) / 2.0) + 0.5;
 	int vertexColorLocation = glGetUniformLocation(shader->getShaderProgram(), "ourColor");

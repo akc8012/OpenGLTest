@@ -1,14 +1,84 @@
 #include "Shader.h"
 
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
+Shader::Shader(const char* vertexPath, const char* fragmentPath)
+{
+	setup(readSourceFromFile(vertexPath).c_str(), readSourceFromFile(fragmentPath).c_str());
+}
+
 Shader::Shader()
 {
-	unsigned int vertexShader = tryCreateShader(vertexShaderSource, GL_VERTEX_SHADER);
-	unsigned int fragmentShader = tryCreateShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
+	const char *defaultVertexSource =
+		"#version 330 core\n"
+		"layout (location = 0) in vec3 aPos;\n"
+		"void main()\n"
+		"{\n"
+		"	gl_Position = vec4(aPos, 1.0);\n"
+		"}\0";
+
+	const char *defaultFragmentSource =
+		"#version 330 core\n"
+		"out vec4 FragColor;\n"
+		"void main()\n"
+		"{\n"
+		"	FragColor = vec4(0.8f, 0.2f, 0.4f, 1.0f);\n"
+		"}\n\0";
+
+	setup(defaultVertexSource, defaultFragmentSource);
+}
+
+void Shader::setup(const char* vertexSource, const char* fragmentSource)
+{
+	unsigned int vertexShader = tryCreateShader(vertexSource, GL_VERTEX_SHADER);
+	unsigned int fragmentShader = tryCreateShader(fragmentSource, GL_FRAGMENT_SHADER);
 
 	shaderProgram = tryCreateShaderProgram(vertexShader, fragmentShader);
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+}
+
+std::string Shader::readSourceFromFile(const char* path)
+{
+	std::string code;
+	std::ifstream file;
+
+	// ensure ifstream objects can throw exceptions:
+	file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	try
+	{
+		file.open(path);
+		std::stringstream stream;
+		
+		stream << file.rdbuf();
+		file.close();
+		
+		code = stream.str();
+	}
+	catch (std::ifstream::failure e)
+	{
+		throw("ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ");
+	}
+	
+	return code;
+}
+
+void Shader::setBool(const std::string &name, bool value) const
+{
+	glUniform1i(glGetUniformLocation(shaderProgram, name.c_str()), (int)value);
+}
+
+void Shader::setInt(const std::string &name, int value) const
+{
+	glUniform1i(glGetUniformLocation(shaderProgram, name.c_str()), value);
+}
+
+void Shader::setFloat(const std::string &name, float value) const
+{
+	glUniform1f(glGetUniformLocation(shaderProgram, name.c_str()), value);
 }
 
 unsigned int Shader::tryCreateShader(const char * source, GLenum shaderType)
