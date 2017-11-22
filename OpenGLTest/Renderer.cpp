@@ -36,6 +36,7 @@ void Renderer::drawTriangle()
 
 	double greenValue = (sin(glfwGetTime()) / 2.0) + 0.5;
 	int vertexColorLocation = glGetUniformLocation(shader->getShaderProgram(), "ourColor");
+	shader->setFloat("offsetX", 0.4f);
 	glUniform4f(vertexColorLocation, 0.0f, (float)greenValue, 0.0f, 1.0f);
 	
 	glBindVertexArray(vertexArrayObject);
