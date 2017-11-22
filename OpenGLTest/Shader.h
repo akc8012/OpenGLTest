@@ -13,9 +13,11 @@ public:
 	unsigned int getShaderProgram() { return shaderProgram; }
 
 	void use() { glUseProgram(shaderProgram); }
-	void setBool(const std::string &name, bool value) const;
-	void setInt(const std::string &name, int value) const;
-	void setFloat(const std::string &name, float value) const;
+	void setBool(const std::string &name, bool value) const { glUniform1i(glGetUniformLocation(shaderProgram, name.c_str()), (int)value); }
+	void setInt(const std::string &name, int value) const { glUniform1i(glGetUniformLocation(shaderProgram, name.c_str()), value); }
+	void setFloat(const std::string &name, float value) const { glUniform1f(glGetUniformLocation(shaderProgram, name.c_str()), value); }
+
+	int getUniformLocation(const std::string &name) const { return glGetUniformLocation(shaderProgram, name.c_str()); }
 
 private:
 
