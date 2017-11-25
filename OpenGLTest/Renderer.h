@@ -2,6 +2,7 @@
 
 #include "common.h"
 #include "Shader.h"
+#include "Texture.h"
 
 class Renderer
 {
@@ -16,6 +17,7 @@ public:
 private:
 
 	Shader* shader;
+	Texture* texture;
 	unsigned int vertexArrayObject;
 
 	unsigned int bindVertexArrayObject();
