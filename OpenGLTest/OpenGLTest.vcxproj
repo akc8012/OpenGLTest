@@ -69,8 +69,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\opengl\include;$(IncludePath)</IncludePath>
-    <LibraryPath>c:\opengl\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\opengl_old\include;$(IncludePath)</IncludePath>
+    <LibraryPath>c:\opengl_old\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\opengl\include;$(IncludePath)</IncludePath>
